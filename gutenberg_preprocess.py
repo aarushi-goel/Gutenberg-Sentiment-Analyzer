@@ -29,9 +29,10 @@ def init_books(author_file, json_file):
         s = get_etexts('author', author)
         for i in s:
             try:
-                title, etext = list(get_metadata('title', i))[0], strip_headers(load_etext(i)).strip()
-                b = Book(i, title, etext)
-                books.append(b)
+                if list(get_metadata('language', i))[0] == 'en':
+                    title, etext = list(get_metadata('title', i))[0], strip_headers(load_etext(i)).strip()
+                    b = Book(i, title, etext)
+                    books.append(b)
             except UnknownDownloadUriException:
                 # this book does not have a load_etext corresponding to it.
                 pass
